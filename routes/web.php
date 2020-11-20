@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('inicio');
 });
+
+Route::get('/sentence', [App\Http\Controllers\HomeController::class, 'sentenceSQL'])->name('sentence');
