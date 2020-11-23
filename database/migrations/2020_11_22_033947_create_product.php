@@ -13,14 +13,14 @@ class CreateProduct extends Migration
      */
     public function up()
     {
-        Schema::create('product', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('key');
-            $table->string('name');
-            $table->string('description');
-            $table->string('price');
-            $table->string('cuantity');
-            $table->string('provider_id');
+            $table->string('key')->nullable();
+            $table->string('name')->nullable();
+            $table->string('description')->nullable();
+            $table->integer('price')->nullable();
+            $table->integer('cuantity')->nullable();
+            $table->foreignId('provider_id')->references('id')->on('providers');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateProduct extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product');
+        Schema::dropIfExists('products');
     }
 }

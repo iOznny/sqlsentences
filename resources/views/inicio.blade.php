@@ -20,14 +20,16 @@
                         <label for="sentence">Sentencia a realizar.</label>
                         <select class="form-control" id="sentence" name="sentence" required>
                             <option value="" selected disabled hidden>Seleccione una instrucción SQL</option>
-                            <option value="J">Join</option>
+                            <option value="JN">Join</option>
                             <option value="LJ">Left Join</option>
                             <option value="RJ">Right Join</option>
                             <option value="IJ">Inner Join</option>
                             <option value="SJ">Straight Join</option>
-                            <option value="IF">Control If - Case</option>
-                            <option value="VAR">Variables de Usuario</option>
-                            <option value="CREATE">Crear una tabla apartir de otra</option>
+                            <option value="IF">Control If</option>
+                            <option value="WHEN">Control When - Then</option>
+                            <option value="PCMAX">Precio maxímo en Productos</option>
+                            <option value="RGPCMAX">Registro del precio maxímo en Productos</option>
+                            <option value="TB">Crear una tabla apartir de otra</option>
                         </select>
                         <div class="invalid-feedback">
                             Seleccione una instruccion SQL.
@@ -44,9 +46,7 @@
                         <label for="entityone">Entidad (Primary).</label>
                         <select class="form-control" id="entityone" name="entityone" required>
                             <option value="" selected disabled hidden>Seleccione una entidad</option>
-                            <option value="J">Join</option>
-                            <option value="L">Left Join</option>
-                            
+                            <option value="Provider">Proveedor</option>
                         </select>
                         <div class="invalid-feedback">
                             Seleccione una instruccion SQL.
@@ -60,9 +60,7 @@
                         <label for="entitytwo">Entidad (Secundary).</label>
                         <select class="form-control" id="entitytwo" name="entitytwo" required>
                             <option value="" selected disabled hidden>Seleccione una entidad</option>
-                            <option value="J">Join</option>
-                            <option value="L">Left Join</option>
-                           
+                            <option value="Products">Productos</option>                
                         </select>
                         <div class="invalid-feedback">
                             Seleccione una instruccion SQL.
@@ -73,15 +71,102 @@
                     </div>
                 </div>
 
+                {{--- 
+                <h4 class="mb-3">Seleccion de Atributos</h4>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="attrone">Entidad (Primary).</label>
+                        <select class="form-control" id="attrone" name="attrone[]" multiple required>
+                            <option value="" selected disabled hidden>Seleccione el/los atributo(s)</option>
+                            <option value="id">ID</option>
+                            <option value="key">Clave</option>
+                            <option value="name">Nombre</option>
+                            <option value="description">Descripción</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Seleccione el/los atributo(s).
+                        </div>
+                        <div class="valid-feedback">
+                            Seleccionado(s) correctamente.
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="attrtwo">Entidad (Secundary).</label>
+                        <select class="form-control" id="attrtwo" name="attrtwo[]" multiple required>
+                            <option value="" selected disabled hidden>Seleccione el/los atributo(s)</option>
+                            <option value="id">ID</option>
+                            <option value="key">Clave</option>
+                            <option value="name">Nombre</option>
+                            <option value="description">Descripción</option>
+                            <option value="price">Precio</option>
+                            <option value="cuantity">Cantidad</option>
+                            <option value="provider_id">Proveedor ID</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Seleccione el/los atributo(s).
+                        </div>
+                        <div class="valid-feedback">
+                            Seleccionado(s) correctamente.
+                        </div>
+                    </div>
+                </div> 
+                ---}}
+
                 <hr class="mb-4">
 
                 <button type="submit" class="btn btn-primary btn-lg btn-block">
-                    Enviar sentencia SQL
+                    Realizar consulta SQL
                 </button>
             </form>
         </div>
     </div>
 </div>
+
+@if(isset($data))
+<div class="container-fluid">
+    <hr class="mb-4">
+
+    <div class="row">
+        <div class="col-md-10 mx-auto mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="col-12 text-center">
+                        <button type="button" class="btn btn-primary font-weight-bold">
+                            Muestreo de Query
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <table id="miTabla" class="display responsive nowrap" style="width:100%">
+                        <thead>
+                            <tr>
+                                @foreach($data as $key => $q)
+                                    <th>{{ $key }}</th>
+                                @endforeach
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach($data as $q)
+                                <td>{{ $q }}</td>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                    @if(Session::get('mensaje'))
+                        <div class="alert alert-{{Session::get('color-class')}} mt-3" role="alert">
+                            {{ Session::get('mensaje') }}
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+
 @stop
 
 @section('js')
