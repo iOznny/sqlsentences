@@ -7,9 +7,6 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Font Awesome --->
-    <link rel="stylesheet" href="{{asset('AdminLTE/plugins/fontawesome-free/css/all.min.css')}}">
-
     <!-- Boostrap 4 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
@@ -21,6 +18,9 @@
     <!-- Custom styles for this template -->
     <link href="https://getbootstrap.com/docs/4.5/examples/checkout/form-validation.css" rel="stylesheet">
 
+    <!-- Data Table -->
+    <link rel="stylesheet" href="{{ asset('datatable/css/jquery.dataTables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('datatable/css/responsive.dataTables.min.css') }}">
 
     @yield('css')
 </head>
