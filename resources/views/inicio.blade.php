@@ -140,18 +140,18 @@
 
                 <div class="card-body">
                     <table id="miTabla" class="display responsive nowrap" style="width:100%">
-                        <thead>
-                            <tr>
-                                @foreach($data as $key => $q)
-                                    <th>{{ $key }}</th>
-                                @endforeach
-                            </tr>
-                        </thead>
-
+                        
                         <tbody>
-                            @foreach($data as $q)
-                                <td>{{ $q }}</td>
-                            @endforeach
+                            @for($i = 0; $i < count($data); $i++ )
+                                <tr>
+                                    <td>{{ $data[$i]['Producto ID'] }}</td>
+                                    <td>{{ $data[$i]['Producto Clave'] }}</td>
+                                    <td>{{ $data[$i]['Producto Nombre'] }}</td>
+                                    <td>{{ $data[$i]['Producto Descripción'] }}</td>
+                                    <td>{{ $data[$i]['Producto Precio'] }}</td>
+
+                                </tr>
+                            @endfor
                         </tbody>
                     </table>
 
@@ -165,7 +165,7 @@
         </div>
     </div>
 </div>
-@endif
+@endif 
 
 @stop
 
