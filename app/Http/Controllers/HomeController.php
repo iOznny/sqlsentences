@@ -23,7 +23,7 @@ class HomeController extends Controller
                         ->get();
 
                     $data = array();
-    
+                    
                     foreach ($query as $key => $q) {
                         $data[$key]['Producto ID'] = $q->proID;
                         $data[$key]['Producto Clave'] = $q->proKey;
@@ -37,7 +37,7 @@ class HomeController extends Controller
                         $data[$key]['Proveedor Descripción'] = $q->pDescription;
                     }
 
-                    dd($data);
+                   // dd($data);
                 break;
 
                 case 'LJ':
