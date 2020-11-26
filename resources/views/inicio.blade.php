@@ -79,7 +79,7 @@
                         <select class="form-control" id="attrone" name="attrone[]" multiple required>
                             <option value="" selected disabled hidden>Seleccione el/los atributo(s)</option>
                             <option value="id">ID</option>
-                            <option value="key">Clave</option>
+                            <option value="i">Clave</option>
                             <option value="name">Nombre</option>
                             <option value="description">Descripción</option>
                         </select>
@@ -96,7 +96,7 @@
                         <select class="form-control" id="attrtwo" name="attrtwo[]" multiple required>
                             <option value="" selected disabled hidden>Seleccione el/los atributo(s)</option>
                             <option value="id">ID</option>
-                            <option value="key">Clave</option>
+                            <option value="i">Clave</option>
                             <option value="name">Nombre</option>
                             <option value="description">Descripción</option>
                             <option value="price">Precio</option>
@@ -140,18 +140,250 @@
 
                 <div class="card-body">
                     <table id="miTabla" class="display responsive nowrap" style="width:100%">
-                        
-                        <tbody>
-                            @for($i = 0; $i < count($data); $i++ )
-                                <tr>
-                                    <td>{{ $data[$i]['Producto ID'] }}</td>
-                                    <td>{{ $data[$i]['Producto Clave'] }}</td>
-                                    <td>{{ $data[$i]['Producto Nombre'] }}</td>
-                                    <td>{{ $data[$i]['Producto Descripción'] }}</td>
-                                    <td>{{ $data[$i]['Producto Precio'] }}</td>
+                        <thead>
+                            @switch($sentence)
+                                @case('JN')
+                                    <tr>
+                                        <th>Producto ID</th>
+                                        <th>P. Clave</th>
+                                        <th>P. Nombre</th>
+                                        <th>P. Descripción</th>
+                                        <th>P. Precio</th>
+                                        <th>P. Cantidad</th>
+                                        <th>Proveedor ID</th>
+                                        <th>Pro. Clave</th>
+                                        <th>Pro. Nombre</th>
+                                        <th>Pro. Descripción</th>
+                                    </tr>
+                                @break
 
-                                </tr>
-                            @endfor
+                                @case('LJ')
+                                    <tr>
+                                        <th>Proveedor ID</th>
+                                        <th>Pro. Clave</th>
+                                        <th>Pro. Nombre</th>
+                                        <th>Pro. Descripción</th>
+                                        <th>Producto ID</th>
+                                        <th>P. Clave</th>
+                                        <th>P. Nombre</th>
+                                        <th>P. Descripción</th>
+                                        <th>P. Precio</th>
+                                        <th>P. Cantidad</th>
+                                        <th>P. Proveedor ID</th>
+                                    </tr>
+                                @break
+
+                                @case('RJ')
+                                    <tr>
+                                        <th>Proveedor ID</th>
+                                        <th>Pro. Clave</th>
+                                        <th>Pro. Nombre</th>
+                                        <th>Pro. Descripción</th>
+                                        <th>Producto ID</th>
+                                        <th>P. Clave</th>
+                                        <th>P. Nombre</th>
+                                        <th>P. Descripción</th>
+                                        <th>P. Precio</th>
+                                        <th>P. Cantidad</th>
+                                        <th>P. Proveedor ID</th>
+                                    </tr>
+                                @break
+
+                                @case('IJ')
+                                    <tr>
+                                        <th>Producto ID</th>
+                                        <th>P. Nombre</th>
+                                        <th>P. Descripción</th>
+                                        <th>P. Precio</th>
+                                        <th>Proveedor ID</th>
+                                        <th>Pro. Nombre</th>
+                                    </tr>
+                                @break
+
+                                @case('SJ')
+                                    <tr>
+                                        <th>Producto ID</th>
+                                        <th>P. Nombre</th>
+                                        <th>P. Descripción</th>
+                                        <th>P. Precio</th>
+                                        <th>Proveedor ID</th>
+                                        <th>Pro. Nombre</th>
+                                    </tr>
+                                @break
+
+                                @case('IF')
+                                    <tr>
+                                        <th>Proveedor Name</th>
+                                        <th>Proveedor Status</th>
+                                    </tr>
+                                @break
+
+                                @case('WHEN')
+                                    <tr>
+                                        <th>Proveedor Name</th>
+                                        <th>Proveedor Status</th>
+                                    </tr>
+                                @break
+
+                                @case('PCMAX')
+                                    <tr>
+                                        <th>Precio Maxímo en Productos</th>
+                                    </tr>
+                                @break
+
+                                @case('RGPCMAX')
+                                    <tr>
+                                        <th>Producto ID</th>
+                                        <th>Producto Clave</th>
+                                        <th>Producto Nombre</th>
+                                        <th>Producto Descripción</th>
+                                        <th>Producto Precio</th>
+                                        <th>Producto Cantidad</th>
+                                        <th>Proveedor ID</th>
+                                    </tr>
+                                @break
+
+                                @default
+                                    <tr>
+                                        <th>SIN REGISTRO</th>
+                                    </tr>
+                                @break
+                            @endswitch
+                        </thead>
+
+                        <tbody>
+                            @switch($sentence)
+                                @case('JN')
+                                    @for($i = 0; $i < count($data); $i++ )
+                                        <tr>
+                                            <td>{{ $data[$i]['Producto ID'] }}</td>
+                                            <td>{{ $data[$i]['Producto Clave'] }}</td>
+                                            <td>{{ $data[$i]['Producto Nombre'] }}</td>
+                                            <td>{{ $data[$i]['Producto Descripción'] }}</td>
+                                            <td>{{ $data[$i]['Producto Precio'] }}</td>
+                                            <td>{{ $data[$i]['Producto Cantidad'] }}</td>
+                                            <td>{{ $data[$i]['Proveedor ID'] }}</td>
+                                            <td>{{ $data[$i]['Proveedor Clave'] }}</td>
+                                            <td>{{ $data[$i]['Proveedor Nombre'] }}</td>
+                                            <td>{{ $data[$i]['Proveedor Descripción'] }}</td>
+                                        </tr>
+                                    @endfor
+                                @break
+
+                                @case('LJ')
+                                    @for($i = 0; $i < count($data); $i++ )
+                                        <tr>
+                                            <td>{{ $data[$i]['Proveedor ID'] }}</td>
+                                            <td>{{ $data[$i]['Proveedor Clave'] }}</td>
+                                            <td>{{ $data[$i]['Proveedor Nombre'] }}</td>
+                                            <td>{{ $data[$i]['Proveedor Descripción'] }}</td>
+                                            <td>{{ $data[$i]['Producto ID'] }}</td>
+                                            <td>{{ $data[$i]['Producto Clave'] }}</td>
+                                            <td>{{ $data[$i]['Producto Nombre'] }}</td>
+                                            <td>{{ $data[$i]['Producto Descripción'] }}</td>
+                                            <td>{{ $data[$i]['Producto Precio'] }}</td>
+                                            <td>{{ $data[$i]['Producto Cantidad'] }}</td>
+                                            <td>{{ $data[$i]['Proveedor ID'] }}</td>
+                                        </tr>
+                                    @endfor
+                                @break
+
+                                @case('RJ')
+                                    @for($i = 0; $i < count($data); $i++ )
+                                        <tr>
+                                            <td>{{ $data[$i]['Proveedor ID'] }}</td>
+                                            <td>{{ $data[$i]['Proveedor Clave'] }}</td>
+                                            <td>{{ $data[$i]['Proveedor Nombre'] }}</td>
+                                            <td>{{ $data[$i]['Proveedor Descripción'] }}</td>
+                                            <td>{{ $data[$i]['Producto ID'] }}</td>
+                                            <td>{{ $data[$i]['Producto Clave'] }}</td>
+                                            <td>{{ $data[$i]['Producto Nombre'] }}</td>
+                                            <td>{{ $data[$i]['Producto Descripción'] }}</td>
+                                            <td>{{ $data[$i]['Producto Precio'] }}</td>
+                                            <td>{{ $data[$i]['Producto Cantidad'] }}</td>
+                                            <td>{{ $data[$i]['Proveedor ID'] }}</td>
+                                        </tr>
+                                    @endfor
+                                @break
+
+                                @case('IJ')
+                                    @for($i = 0; $i < count($data); $i++ )
+                                        <tr>
+                                            <td>{{ $data[$i]['Producto ID'] }}</td>
+                                            <td>{{ $data[$i]['Producto Nombre'] }}</td>
+                                            <td>{{ $data[$i]['Producto Descripción'] }}</td>
+                                            <td>{{ $data[$i]['Producto Precio'] }}</td>
+                                            <td>{{ $data[$i]['Proveedor ID'] }}</td>
+                                            <td>{{ $data[$i]['Proveedor Nombre'] }}</td>
+                                        </tr>
+                                    @endfor
+                                @break
+
+                                @case('SJ')
+                                    @for($i = 0; $i < count($data); $i++ )
+                                        <tr>
+                                            <td>{{ $data[$i]['Producto ID'] }}</td>
+                                            <td>{{ $data[$i]['Producto Nombre'] }}</td>
+                                            <td>{{ $data[$i]['Producto Descripción'] }}</td>
+                                            <td>{{ $data[$i]['Producto Precio'] }}</td>
+                                            <td>{{ $data[$i]['Proveedor ID'] }}</td>
+                                            <td>{{ $data[$i]['Proveedor Nombre'] }}</td>
+                                        </tr>
+                                    @endfor
+                                @break
+
+                                @case('IF')
+                                    @for($i = 0; $i < count($data); $i++ )
+                                        <tr>
+                                            <td>{{ $data[$i]['Proveedor Nombre'] }}</td>
+                                            <td>{{ $data[$i]['Proveedor Status'] }}</td>
+                                        </tr>
+                                    @endfor
+                                @break
+
+                                @case('WHEN')
+                                    @for($i = 0; $i < count($data); $i++ )
+                                        <tr>
+                                            <td>{{ $data[$i]['Proveedor Nombre'] }}</td>
+                                            <td>{{ $data[$i]['Proveedor Status'] }}</td>
+                                        </tr>
+                                    @endfor
+                                @break
+
+                                @case('WHEN')
+                                    @for($i = 0; $i < count($data); $i++ )
+                                        <tr>
+                                            <td>{{ $data[$i]['Proveedor Nombre'] }}</td>
+                                            <td>{{ $data[$i]['Proveedor Status'] }}</td>
+                                        </tr>
+                                    @endfor
+                                @break
+
+                                @case('PCMAX')
+                                    @for($i = 0; $i < count($data); $i++ )
+                                        <tr>
+                                            <td>{{ $data[$i]['Precio Maximo'] }}</td>
+                                        </tr>
+                                    @endfor
+                                @break
+
+                                @case('RGPCMAX')
+                                    @for($i = 0; $i < count($data); $i++ )
+                                        <tr>
+                                            <td>{{ $data[$i]['Producto ID'] }}</td>
+                                            <td>{{ $data[$i]['Producto Clave'] }}</td>
+                                            <td>{{ $data[$i]['Producto Nombre'] }}</td>
+                                            <td>{{ $data[$i]['Producto Descripción'] }}</td>
+                                            <td>{{ $data[$i]['Producto Precio'] }}</td>
+                                            <td>{{ $data[$i]['Producto Cantidad'] }}</td>
+                                            <td>{{ $data[$i]['Proveedor ID'] }}</td>
+                                        </tr>
+                                    @endfor
+                                @break
+
+                                @default
+                                @break
+                            @endswitch
                         </tbody>
                     </table>
 

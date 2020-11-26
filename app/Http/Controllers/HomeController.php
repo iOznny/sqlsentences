@@ -12,6 +12,9 @@ class HomeController extends Controller
 {
     public function sentenceSQL (Request $request) {
         if(isset($request->sentence)) {
+
+            $sentence = '';
+
             switch ($request->sentence) {
                 case 'JN':
                     $query = DB::table('products as pro')
@@ -32,12 +35,12 @@ class HomeController extends Controller
                         $data[$key]['Producto Precio'] = $q->price;
                         $data[$key]['Producto Cantidad'] = $q->cuantity;
                         $data[$key]['Proveedor ID'] = $q->provider_id;
-                        $data[$key]['Proveedor Clave'] = $q->pID;
+                        $data[$key]['Proveedor Clave'] = $q->pKey;
                         $data[$key]['Proveedor Nombre'] = $q->pName;
                         $data[$key]['Proveedor Descripción'] = $q->pDescription;
                     }
 
-                   // dd($data);
+                    $sentence = 'JN';
                 break;
 
                 case 'LJ':
@@ -48,6 +51,24 @@ class HomeController extends Controller
                             'pro.id as proID', 'pro.key as proKey', 'pro.name as proName', 'pro.description as proDescription', 'pro.price', 'pro.cuantity',  'pro.provider_id'
                         )
                         ->get();
+                    
+                    $data = array();
+                    
+                    foreach ($query as $key => $q) {
+                        $data[$key]['Proveedor ID'] = $q->pID;
+                        $data[$key]['Proveedor Clave'] = $q->pKey;
+                        $data[$key]['Proveedor Nombre'] = $q->pName;
+                        $data[$key]['Proveedor Descripción'] = $q->pDescription;
+                        $data[$key]['Producto ID'] = $q->proID;
+                        $data[$key]['Producto Clave'] = $q->proKey;
+                        $data[$key]['Producto Nombre'] = $q->proName;
+                        $data[$key]['Producto Descripción'] = $q->proDescription;
+                        $data[$key]['Producto Precio'] = $q->price;
+                        $data[$key]['Producto Cantidad'] = $q->cuantity;
+                        $data[$key]['Proveedor ID'] = $q->provider_id;
+                    }
+
+                    $sentence = 'LJ';
                 break;
 
                 case 'RJ':
@@ -58,16 +79,47 @@ class HomeController extends Controller
                             'pro.id as proID', 'pro.key as proKey', 'pro.name as proName', 'pro.description as proDescription', 'pro.price', 'pro.cuantity',  'pro.provider_id'
                         )
                         ->get();
+                    
+                    $data = array();
+                    
+                    foreach ($query as $key => $q) {
+                        $data[$key]['Proveedor ID'] = $q->pID;
+                        $data[$key]['Proveedor Clave'] = $q->pKey;
+                        $data[$key]['Proveedor Nombre'] = $q->pName;
+                        $data[$key]['Proveedor Descripción'] = $q->pDescription;
+                        $data[$key]['Producto ID'] = $q->proID;
+                        $data[$key]['Producto Clave'] = $q->proKey;
+                        $data[$key]['Producto Nombre'] = $q->proName;
+                        $data[$key]['Producto Descripción'] = $q->proDescription;
+                        $data[$key]['Producto Precio'] = $q->price;
+                        $data[$key]['Producto Cantidad'] = $q->cuantity;
+                        $data[$key]['Proveedor ID'] = $q->provider_id;
+                    }
+
+                    $sentence = 'RJ';
                 break;
 
                 case 'IJ':
                     $query = DB::table('products as pro')
                         ->join('providers as p', 'pro.provider_id', '=', 'p.id')
                         ->select(
-                            'pro.id as proID', 'pro.name as proName', 'pro.description as proDescription', 'pro.price as proPrice',
+                            'pro.id as proID', 'pro.name as proName', 'pro.description as proDescription', 'pro.price',
                             'p.id as pID', 'p.name as pName'
                         )
                         ->get();
+                    
+                    $data = array();
+                    
+                    foreach ($query as $key => $q) {
+                        $data[$key]['Producto ID'] = $q->proID;
+                        $data[$key]['Producto Nombre'] = $q->proName;
+                        $data[$key]['Producto Descripción'] = $q->proDescription;
+                        $data[$key]['Producto Precio'] = $q->price;
+                        $data[$key]['Proveedor ID'] = $q->pID;
+                        $data[$key]['Proveedor Nombre'] = $q->pName;
+                    }
+                    
+                    $sentence = 'IJ';
                 break;
 
                 case 'SJ':
@@ -77,32 +129,72 @@ class HomeController extends Controller
                         STRAIGHT_JOIN products as pro 
                         ON p.id = pro.provider_id"
                     );
+
+                    $data = array();
+                    
+                    foreach ($query as $key => $q) {
+                        $data[$key]['Producto ID'] = $q->proID;
+                        $data[$key]['Producto Nombre'] = $q->proName;
+                        $data[$key]['Producto Descripción'] = $q->proDescription;
+                        $data[$key]['Producto Precio'] = $q->proPrice;
+                        $data[$key]['Proveedor ID'] = $q->pID;
+                        $data[$key]['Proveedor Nombre'] = $q->pName;
+                    }
+
+                    $sentence = 'SJ';
                 break;
 
                 case 'IF':
                     $query = DB::select(
-                        "SELECT p.name, if(count(pro.provider_id) > 0, 'SI', 'NO') AS status
+                        "SELECT p.name as pName, if(count(pro.provider_id) > 0, 'SI', 'NO') AS pStatus
                         FROM providers p
                         LEFT JOIN products pro
                         ON p.id = pro.provider_id
                         GROUP BY p.name"
                     );
+
+                    
+                    $data = array();
+                    
+                    foreach ($query as $key => $q) {
+                        $data[$key]['Proveedor Nombre'] = $q->pName;
+                        $data[$key]['Proveedor Status'] = $q->pStatus;
+                    }
+
+                    $sentence = 'IF';
                 break;
 
                 case 'WHEN':
                     $query = DB::select(
-                        "SELECT p.name, 
+                        "SELECT p.name AS pName, 
                         CASE count(pro.provider_id) WHEN 0 THEN 'NO'
-                        ELSE 'SI' END AS 'Status'
+                        ELSE 'SI' END AS pStatus
                         FROM providers p
                         LEFT JOIN products pro
                         ON p.id = pro.provider_id
                         GROUP BY p.name"
                     );
+
+                    $data = array();
+                    
+                    foreach ($query as $key => $q) {
+                        $data[$key]['Proveedor Nombre'] = $q->pName;
+                        $data[$key]['Proveedor Status'] = $q->pStatus;
+                    }
+
+                    $sentence = 'WHEN';
                 break;
 
                 case 'PCMAX':
                     $query = DB::select("SELECT @preciomayor:=max(price) AS priceMax FROM products");
+
+                    $data = array();
+                    
+                    foreach ($query as $key => $q) {
+                        $data[$key]['Precio Maximo'] = $q->priceMax;
+                    }
+                    
+                    $sentence = 'PCMAX';
                 break;
 
                 case 'RGPCMAX':
@@ -116,15 +208,17 @@ class HomeController extends Controller
 
                     $data = array();
 
-                    foreach ($query as $q) {
-                        $data['ID'] = $q->id;
-                        $data['Clave'] = $q->key;
-                        $data['Nombre'] = $q->name;
-                        $data['Descripción'] = $q->description;
-                        $data['Precio'] = $q->price;
-                        $data['Cantidad'] = $q->cuantity;
-                        $data['Proveedor ID'] = Provider::find($q->provider_id)->name;
+                    foreach ($query as $key => $q) {
+                        $data[$key]['Producto ID'] = $q->id;
+                        $data[$key]['Producto Clave'] = $q->key;
+                        $data[$key]['Producto Nombre'] = $q->name;
+                        $data[$key]['Producto Descripción'] = $q->description;
+                        $data[$key]['Producto Precio'] = $q->price;
+                        $data[$key]['Producto Cantidad'] = $q->cuantity;
+                        $data[$key]['Proveedor ID'] = $q->provider_id;
                     }
+
+                    $sentence = 'RGPCMAX';
                 break;
 
                 case 'TB':
@@ -136,6 +230,6 @@ class HomeController extends Controller
             $request->session()->flash('color-class', 'danger text-center');   
         }
 
-        return view('inicio', compact('data'));
+        return view('inicio', compact('data', 'sentence'));
     }
 }
